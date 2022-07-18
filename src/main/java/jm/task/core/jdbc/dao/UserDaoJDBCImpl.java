@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
+    Connection connection = Util.getConnection();
     public UserDaoJDBCImpl() {
 
     }
@@ -19,7 +20,6 @@ public class UserDaoJDBCImpl implements UserDao {
         String sql = "CREATE TABLE IF NOT EXISTS User (id INT PRIMARY KEY AUTO_INCREMENT, " +
                 "name VARCHAR(45), lastName VARCHAR(45), age TINYINT(100));";
         try {
-            Connection connection = Util.getConnection();
             connection.setAutoCommit(false);
             connection.createStatement().execute(sql);
 
@@ -32,7 +32,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
             String sql = "DROP TABLE IF EXISTS User";
             try {
-                Connection connection = Util.getConnection();
                 connection.setAutoCommit(false);
                 connection.createStatement().execute(sql);
             } catch (SQLException e) {
@@ -44,7 +43,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
         String sql = "INSERT INTO User (name, lastName, age) VALUES ('" + name + "', '" + lastName + "', '" + age + "');";
         try {
-            Connection connection = Util.getConnection();
             connection.setAutoCommit(false);
             connection.createStatement().execute(sql);
         } catch (SQLException e) {
@@ -55,7 +53,6 @@ public class UserDaoJDBCImpl implements UserDao {
     public void removeUserById(long id) {
         String sql = "DELETE FROM User WHERE id = "+id+";";
         try {
-            Connection connection = Util.getConnection();
             connection.setAutoCommit(false);
             connection.createStatement().execute(sql);
         } catch (SQLException e) {
@@ -68,7 +65,6 @@ public class UserDaoJDBCImpl implements UserDao {
         String sql = "SELECT * FROM User";
         ResultSet res = null;
         try {
-            Connection connection = Util.getConnection();
             connection.setAutoCommit(false);
             res = connection.createStatement().executeQuery(sql);
             while (res.next()) {
@@ -88,7 +84,6 @@ public class UserDaoJDBCImpl implements UserDao {
     public void cleanUsersTable() {
         String sql = "DELETE FROM User";
         try {
-            Connection connection = Util.getConnection();
             connection.setAutoCommit(false);
             connection.createStatement().execute(sql);
         } catch (SQLException e) {
