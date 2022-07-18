@@ -15,6 +15,9 @@ import java.util.Properties;
 public class Util {
     private static SessionFactory sessionFactory;
 
+    private Util() {
+    }
+
     public static Connection getConnection() {
         try {
             return DriverManager.getConnection("jdbc:mysql://localhost:3306", "root", "11111111");
@@ -34,15 +37,13 @@ public class Util {
                 properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
                 configuration.setProperties(properties);
                 configuration.addAnnotatedClass(User.class);
-                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration
+                        .getProperties()).build();
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return sessionFactory;
-    }
-
-    private Util() {
     }
 }
