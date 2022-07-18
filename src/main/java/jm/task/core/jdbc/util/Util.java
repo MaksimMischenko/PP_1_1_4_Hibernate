@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class Util {
+    private static SessionFactory sessionFactory;
+
     public static Connection getConnection() {
         try {
             return DriverManager.getConnection("jdbc:mysql://localhost:3306", "root", "11111111");
@@ -20,10 +22,6 @@ public class Util {
             throw new RuntimeException(e);
         }
     }
-
-    private Util() {}
-
-    private static SessionFactory sessionFactory;
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
@@ -43,5 +41,8 @@ public class Util {
             }
         }
         return sessionFactory;
+    }
+
+    private Util() {
     }
 }
