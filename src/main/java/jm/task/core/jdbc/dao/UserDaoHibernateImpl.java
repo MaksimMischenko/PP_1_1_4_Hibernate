@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-    Session session = null;
+    private final Session session = null;
     private Transaction transaction = null;
 
     public UserDaoHibernateImpl() {
@@ -19,7 +19,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
-        try {
+        try (Session session = Util.getSessionFactory().openSession()){
             transaction = session.beginTransaction();
             String sql = "CREATE TABLE IF NOT EXISTS users(id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT, name varchar(100), lastName varchar(100), age tinyint)";
             session.createSQLQuery(sql).addEntity(User.class).executeUpdate();

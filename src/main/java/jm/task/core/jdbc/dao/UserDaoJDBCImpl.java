@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    Connection connection = Util.getConnection();
+    private final Connection connection = Util.getConnection();
+
     public UserDaoJDBCImpl() {
 
     }
@@ -30,14 +31,14 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
 
-            String sql = "DROP TABLE IF EXISTS User";
-            try {
-                connection.setAutoCommit(false);
-                connection.createStatement().execute(sql);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        String sql = "DROP TABLE IF EXISTS User";
+        try {
+            connection.setAutoCommit(false);
+            connection.createStatement().execute(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+    }
 
     public void saveUser(String name, String lastName, byte age) {
 
@@ -51,7 +52,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void removeUserById(long id) {
-        String sql = "DELETE FROM User WHERE id = "+id+";";
+        String sql = "DELETE FROM User WHERE id = " + id + ";";
         try {
             connection.setAutoCommit(false);
             connection.createStatement().execute(sql);
